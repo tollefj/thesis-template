@@ -19,7 +19,7 @@ for PAPER in papers/*.md; do
   # Compile to PDF using paper configuration
   pandoc --bibliography=filtered.bib \
          --defaults=config/config_paper.yaml \
-         --csl=config/csl-chicago-author-date.csl \
+         --csl=config/acl.csl \
          $PAPER \
          -o papers/${BASENAME}.pdf \
          --top-level-division=chapter

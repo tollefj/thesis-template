@@ -30,7 +30,7 @@ sed 's/\\%5F/_/g' "${BIB_FILE}" > "${BIB_FILE}.tmp" && mv "${BIB_FILE}.tmp" "${B
 # Run pandoc with filterbib.lua to extract cited references
 # Output to /dev/null since we only need the filtered.bib side effect
 pandoc --bibliography ${BIB_FILE} \
-       --csl=config/csl-chicago-author-date.csl \
+       --csl=config/acl.csl \
        --defaults=${DEFAULTS_FILE} \
        --lua-filter=latex/filters/filterbib.lua \
        ${ALL_FILES[*]} \

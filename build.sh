@@ -73,7 +73,7 @@ if [[ "$1" == "--tex" ]]; then
     # Generate LaTeX file only (for debugging)
     echo -e "${YELLOW}Step 3/3: Generating LaTeX file...${NC}"
     pandoc --bibliography ${BIB_FILE} \
-           --csl=config/csl-chicago-author-date.csl \
+           --csl=config/acl.csl \
            --defaults=${DEFAULTS_FILE} \
            ${THESIS_CONTENT_FILES[*]} \
            ${META_FILE} \
@@ -83,7 +83,7 @@ else
     # Generate PDF (default)
     echo -e "${YELLOW}Step 3/3: Compiling to PDF (this may take 1-2 minutes)...${NC}"
     pandoc --bibliography ${BIB_FILE} \
-           --csl=config/csl-chicago-author-date.csl \
+           --csl=config/acl.csl \
            --defaults=${DEFAULTS_FILE} \
            ${THESIS_CONTENT_FILES[*]} \
            ${META_FILE} \
