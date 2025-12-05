@@ -1,0 +1,49 @@
+# Pandoc Configuration for Individual Papers
+# Simplified configuration for compiling standalone papers
+
+filters:
+  - citeproc    # Process citations
+
+metadata:
+  link-citations: true
+  lang: en-US
+
+variables:
+  documentclass: scrbook
+  book: true
+  papersize: a4
+  fontsize: 11pt
+  fontfamily: libertine
+  fontenc: T1
+  titlepage: true         # Enable title page for papers
+  toc-own-page: true
+  colorlinks: true
+  linkcolor: black
+  urlcolor: black
+  citecolor: black
+  float-placement-figure: htbp
+  listings-no-page-break: true
+
+  classoption:
+    - twoside
+    - openright
+    - clearpage=empty
+    - cleardoublepage=empty
+    - headings=normal
+
+  # Slightly smaller margins for papers
+  geometry:
+    - inner=30mm
+    - outer=20mm
+    - top=25mm
+    - bottom=25mm
+
+number-sections: true
+listings: true
+pdf-engine: xelatex
+from: markdown+grid_tables+pipe_tables+multiline_tables
+
+# Include LaTeX packages and custom commands
+include-in-header:
+  - latex/packages.tex
+  - latex/commands.tex

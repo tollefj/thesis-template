@@ -1,0 +1,93 @@
+\renewcommand{\maketitle}{}
+\fancyhf{} % clear default headers/footers
+\fancyhead[LE]{\leftmark}  % even pages (left) = chapter
+\fancyhead[RO]{\rightmark} % odd pages (right) = section
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}} % store chapter title only
+\renewcommand{\sectionmark}[1]{\markright{#1}}    % store section title only
+
+% this lets us inject tex into code listings
+\newcommand{\hlbold}[1]{\raisebox{0pt}[0pt][0pt]{\textbf{#1}}}
+\newcommand{\hlboldblue}[1]{\raisebox{0pt}[0pt][0pt]{\textbf{\textcolor{blue}{#1}}}}
+
+\definecolor{darkblue}{RGB}{0, 51, 102}
+\definecolor{gray}{RGB}{128, 128, 128} % Define gray if not already
+
+% NARC paper
+\newcommand{\norex}[1]{\textit{#1}}
+\newcommand{\eng}[1]{`#1'}
+\newcommand{\coref}[0]{\textsc{coreference}}
+\newcommand{\bridge}[0]{\textsc{bridging}}
+\newcommand{\fen}{F\textsubscript{1}\xspace}
+
+\newcommand{\papernumeral}[1]{
+	\renewcommand{\thechapter}{\Roman{chapter}}
+	\setcounter{chapter}{#1}  % manual override of chapter prefix
+}
+
+% inputs: paper number (I, II, III...), title, authors, venue, year
+\newcommand{\paperheader}[5]{
+	\cleardoublepage
+	\thispagestyle{empty}
+	\phantomsection
+	\vspace*{\fill}
+	\begin{center}
+		% "paper I" etc.
+		{\color{darkblue}\fontsize{4em}{1.2em}\selectfont\textbf{#1}} %
+		\vspace{1cm}
+
+		% title
+		{\color{gray!80!black}\fontsize{1.7em}{1.2em}\selectfont#2} %
+		\vspace{0.5cm}
+
+		% authors list
+		{\color{gray!80!black}\fontsize{1.5em}{1.2em}\selectfont\textit{#3}}
+		\vspace{0.5cm}
+
+		% published conference/workshop/journal
+		{\color{gray!80!black}\fontsize{1.3em}{1.2em}\selectfont\textit{#4}}
+		\vspace{0.5cm}
+	\end{center}
+
+	\vspace*{\fill} % push content vertically to the center
+	\thispagestyle{plain}
+}
+
+\newcommand{\chapterheader}[3]{
+	\cleardoublepage
+	\thispagestyle{empty}
+	\vspace*{\fill}
+	\begin{center}
+		{\color{darkblue}\fontsize{5em}{1.2em}\selectfont\textbf{#1}}
+		\vspace{1cm}
+
+		{\color{gray!80!black}\fontsize{2.5em}{1.2em}\selectfont#2}
+
+		\vspace{1.5cm}
+
+		% optional image
+		\ifx\relax#3\relax
+		\else%
+			\includegraphics[width=0.6\linewidth]{#3}
+		\fi
+	\end{center}
+
+	\vspace*{\fill}
+	\clearpage
+	\thispagestyle{plain}
+	\addcontentsline{toc}{chapter}{{#1}\hspace{1em}#2}
+}
+
+% include a PDF and cover its footer so the master page number shows instead
+% adjust the "1.2cm" value to match how high the original page numbers sit
+\newcommand{\includepdfclean}[2][]{%
+	\cleardoublepage
+	\pagestyle{empty}
+	\includepdf[pages=-,pagecommand={%
+				\thispagestyle{plain}%
+				\begin{tikzpicture}[remember picture,overlay]%
+					\fill[white] (current page.south west) rectangle ($(current
+						page.south east)+(0,1.2cm)$);%
+				\end{tikzpicture}%
+			},#1]{#2}%
+}
+

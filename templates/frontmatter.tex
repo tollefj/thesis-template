@@ -1,0 +1,88 @@
+% Frontmatter Template
+% Generates title page, dedication, abstracts, preface, acknowledgements, and lists
+
+% === TITLE PAGE ===
+\begin{titlepage}
+	\centering
+	\vspace*{5cm}
+	% Main title
+	{\huge \bfseries $title$\par}
+	\vspace{1cm}
+	% Subtitle
+	{\Large \itshape $subtitle$\par}
+	\vfill
+	% Author
+	{\Large \scshape $author$\par}
+	\vspace{2cm}
+	% Place and date
+	{\large $place$, $date$\par}
+	\vspace*{2cm}
+\end{titlepage}
+
+\clearpage
+
+% === DEDICATION PAGE ===
+\thispagestyle{empty}
+\hfill
+\vfill
+
+\begin{flushleft}
+	\vspace{6em}
+	% Edit dedication text here
+	\noindent{\Huge \textit{To [Name]}}
+\end{flushleft}
+\begin{flushleft}
+	{\Large \textit{My [relationship].}}
+	\\
+\end{flushleft}
+\vfill
+
+\clearpage
+
+% === ABSTRACT (English) ===
+\chapter*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+$abstract-en$
+
+% === ABSTRACT (Secondary Language) ===
+% Remove or customize this section if not needed
+\chapter*{Sammendrag}
+\addcontentsline{toc}{section}{Sammendrag}
+$abstract-no$
+
+% === PREFACE ===
+\chapter*{Preface}
+\addcontentsline{toc}{section}{Preface}
+$preface$
+
+% Standard submission statement - edit as needed
+\noindent This thesis is submitted in partial fulfillment of the requirements for the degree of Philosophiae Doctor (PhD) at the $university$.
+The research was carried out at the $department$.
+
+\vspace{5mm}
+\noindent $place$, $date$ \\
+\vspace{5mm}
+% Signature image (place signature.jpg in images/ folder)
+\includegraphics[width=0.275\textwidth]{images/signature.jpg}
+
+\clearpage
+
+% === ACKNOWLEDGEMENTS ===
+\section*{Acknowledgements}
+$acknowledgements$
+
+% === LIST OF PAPERS ===
+% Conditional: only includes if listofpapers is defined in meta.yaml
+$if(listofpapers)$
+\chapter*{List of Papers}
+\addcontentsline{toc}{section}{List of Papers}
+$listofpapers$
+$endif$
+
+% === LIST OF ACRONYMS ===
+% Conditional: only includes if listofacronyms is defined in meta.yaml
+$if(listofacronyms)$
+\chapter*{List of Acronyms}
+\addcontentsline{toc}{section}{List of Acronyms}
+$listofacronyms$
+$endif$

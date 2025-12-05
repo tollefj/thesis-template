@@ -1,0 +1,82 @@
+# Main Pandoc Configuration for PhD Thesis
+# This file controls document structure, styling, and PDF generation
+
+# Pandoc filters (executed in order)
+filters:
+  - citeproc                        # Process citations and bibliography
+  - latex/filters/short-captions.lua    # Enable short captions for List of Figures
+  - latex/filters/filterboxes.lua       # Create colored tcolorbox environments
+
+# Document metadata
+metadata:
+  link-citations: true    # Make citations clickable links
+  lang: en-US            # Document language
+
+# LaTeX variables
+variables:
+  documentclass: scrbook  # KOMA-Script book class for professional typography
+  book: true             # Book mode (affects chapter handling)
+  papersize: a4          # Paper size
+  fontsize: 11pt         # Base font size
+  fontfamily: libertine  # Main font family
+  fontenc: T1            # Font encoding
+
+  # Table of contents
+  toc-own-page: true     # Place TOC on separate page
+
+  # Hyperlink colors (set to black for print version)
+  colorlinks: true
+  linkcolor: black       # Internal links
+  urlcolor: black        # URLs
+  citecolor: black       # Citations
+
+  # Float placement
+  float-placement-figure: htbp  # Figure placement: here, top, bottom, page
+  listings-no-page-break: true  # Prevent page breaks in code listings
+  indent: true                  # Paragraph indentation
+
+  # Document class options
+  classoption:
+    - twoside              # Two-sided layout (for printing)
+    - openright            # Chapters start on right (odd) pages
+    - clearpage=empty      # Empty pages have no headers/footers
+    - cleardoublepage=empty
+    - headings=normal      # Normal heading style
+
+  # Page margins (binding-friendly)
+  geometry:
+    - inner=35mm          # Inner margin (binding side)
+    - outer=25mm          # Outer margin
+    - top=30mm            # Top margin
+    - bottom=30mm         # Bottom margin
+
+# Section numbering
+number-sections: true
+
+# Code listings support
+listings: true
+
+# PDF generation engine
+pdf-engine: xelatex    # XeLaTeX for Unicode and modern font support
+
+# Input format with table support
+from: markdown+grid_tables+pipe_tables+multiline_tables
+
+# Table of Contents settings
+toc: true              # Generate TOC
+toc-depth: 3           # Include sections up to level 3
+
+# Lists of Figures and Tables
+lof: true              # Generate List of Figures
+lot: true              # Generate List of Tables
+
+# LaTeX includes
+include-in-header:
+  - latex/packages.tex     # LaTeX package imports
+  - latex/commands.tex     # Custom LaTeX commands
+
+include-before-body:
+  - __frontmatter.filled.tex  # Title page, abstract, TOC, etc.
+
+include-after-body:
+  - __backmatter.filled.tex   # Final quote and closing

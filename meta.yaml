@@ -1,0 +1,87 @@
+---
+# PhD Thesis Metadata
+# Replace all placeholder text with your actual thesis information
+
+# Basic Information
+title: "Your Thesis Title Here"
+subtitle: "A Comprehensive Study on [Your Research Topic]"
+author: "Your Full Name"
+date: "Month Year"          # e.g., "December 2025"
+place: "City Name"          # e.g., "Trondheim"
+
+# Supervisors and Location
+supervisor1: "Main Supervisor Name"
+supervisor2: "Co-supervisor Name (if applicable)"
+location: "City, Country"
+reviewer1: "Reviewer Name, Institution"
+reviewer2: "Reviewer Name, Institution"
+
+# University Information
+universityfull: Full University Name
+university: University Name (ABBREVIATION)
+department: Department of [Your Department]
+faculty: Faculty of [Your Faculty]
+period: Month YYYY - Month YYYY   
+
+# Abstract (English)
+# Write a 200-300 word summary of your research
+abstract-en: |
+  This thesis investigates [research topic] with a focus on [specific aspect].
+  The work addresses [problem statement] and proposes [solution/approach].
+
+  The research methodology includes [methods used], applied to [data/domain].
+  Key findings demonstrate [main results and contributions].
+
+  Results show that [key outcomes]. These findings have implications for [field/application].
+
+  This thesis contributes to [research area] by [main contributions].
+
+# Sammendrag 
+abstract-no: |
+  Denne avhandlingen undersøker [tema] med fokus på [aspekt].
+  Arbeidet adresserer [problemstilling] og foreslår [løsning/tilnærming].
+
+  [Add your abstract in Norwegian if it is your mother tongue, or remove this section]
+
+# Preface
+# Personal context and background for your research
+preface: |
+  This thesis presents research conducted at [University] from [dates] as part of the [Program Name] doctoral program.
+
+  The work was carried out at the [Department] in collaboration with [Project Name / Partners].
+
+  [Add personal motivation, context, or background for your research here]
+
+# Acknowledgements
+# Thank supervisors, colleagues, family, and funding sources
+acknowledgements: |
+  I would like to thank my supervisors, [Supervisor Names], for their guidance and support throughout this research.
+
+  Thanks to my colleagues at [Department/Group] for valuable discussions and collaboration.
+
+  Finally, I thank my family and friends for their encouragement and patience during this journey.
+
+# List of Papers
+# List all papers included in Part 2 of the thesis
+listofpapers: |
+  **Paper I**
+  [Author(s)]. "[Paper Title]". In: *Proceedings of [Conference/Journal Name]*, [Year].
+
+  **Paper II**
+  [Author(s)]. "[Paper Title]". In: *[Journal/Conference Name]*, [Volume]([Issue]), [Pages], [Year].
+
+  **Paper III**
+  [Author(s)]. "[Paper Title]". In: *[Conference/Journal Name]*, [Year].
+
+# List of Acronyms (optional)
+# Define abbreviations used in the thesis, if you want to include it.
+listofacronyms: |
+  **ML** - Machine Learning
+  **AI** - Artificial Intelligence
+  [Add your field-specific acronyms here]
+
+# Final Notes (optional, displayed in backmatter)
+finalnotes: |
+  [Add any final notes, declarations, or statements here]
+
+---

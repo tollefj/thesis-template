@@ -1,0 +1,91 @@
+% LaTeX Package Imports for PhD Thesis
+% Simplified version with essential packages only
+
+% ===== PDF AND GRAPHICS =====
+\usepackage{pdfpages}         % Include PDF files (for papers in Part 2)
+\usepackage{graphicx}         % Include images and graphics
+\usepackage{eso-pic}          % Absolute positioning (used for footer masking)
+
+% ===== PAGE LAYOUT =====
+\usepackage{geometry}         % Page margins and layout
+\usepackage{fancyhdr}         % Custom headers and footers
+
+% ===== COLORS =====
+\usepackage[table]{xcolor}    % Color support including table coloring
+\usepackage{colortbl}         % Colored table cells
+
+% Define commonly used colors
+\definecolor{blue}{RGB}{20, 100, 255}
+\definecolor{orange}{RGB}{255, 150, 0}
+\definecolor{gray}{RGB}{150, 150, 150}
+\definecolor{green}{RGB}{0, 100, 0}
+\definecolor{darkblue}{RGB}{0, 51, 102}
+
+% ===== FIGURES AND CAPTIONS =====
+\usepackage{caption}          % Customize figure and table captions
+\usepackage{subcaption}       % Support for subfigures
+
+% ===== TIKZ FOR DIAGRAMS =====
+\usepackage{tikz}
+% Load commonly used TikZ libraries
+\usetikzlibrary{arrows.meta, positioning, shapes, shadows, calc}
+\usetikzlibrary{decorations.pathreplacing, shapes.multipart}
+
+% ===== TABLES =====
+\usepackage{booktabs}         % Professional-looking tables
+\usepackage{tabularx}         % Tables with flexible column widths
+\usepackage{array}            % Enhanced array and tabular environments
+\usepackage{multirow}         % Cells spanning multiple rows
+\usepackage{multicol}         % Multiple columns
+
+% ===== FONTS AND ENCODING =====
+\usepackage[utf8]{inputenc}   % UTF-8 input encoding
+\usepackage{fontspec}         % Font selection (requires XeLaTeX)
+\setmonofont{Hack}            % Monospace font for code (change if needed)
+
+% ===== MATHEMATICS =====
+\usepackage{amsmath}          % AMS mathematical typesetting
+\usepackage{amssymb}          % AMS mathematical symbols
+\usepackage{amsfonts}         % AMS fonts
+\usepackage{mathtools}        % Extensions to amsmath
+
+% ===== CODE LISTINGS =====
+\usepackage{listings}         % Source code formatting
+\usepackage{float}            % Better control of floating environments
+
+% Basic listing style
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  showstringspaces=false,
+  keepspaces=true,
+  columns=flexible,
+  commentstyle=\color{green},
+  keywordstyle=\color{blue},
+  stringstyle=\color{orange}
+}
+
+% Support for Norwegian characters in listings
+\lstset{literate=%
+  {æ}{{\ae}}1
+  {å}{{\aa}}1
+  {ø}{{\o}}1
+  {Æ}{{\AE}}1
+  {Å}{{\AA}}1
+  {Ø}{{\O}}1
+}
+
+% ===== COLORED BOXES =====
+\usepackage[most]{tcolorbox}  % Colored and framed text boxes
+
+% Define basic colored box styles
+\newtcolorbox{bluebox}[1][]{
+  colback=blue!10!white,
+  colframe=blue!75!black,
+  arc=3mm,
+  boxrule=0.5mm,
+  title={#1}
+}
