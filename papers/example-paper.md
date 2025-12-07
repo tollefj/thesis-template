@@ -25,7 +25,7 @@ Table @tbl:results shows performance metrics on the test set.
 | Baseline | 85.2% | 0.83 |
 | Proposed | **92.1%** | **0.91** |
 
-Table: Performance comparison on benchmark dataset. {#tbl:results}
+: Performance comparison on benchmark dataset. {#tbl:results short-caption="Performance comparison."}
 
 ## Conclusion
 

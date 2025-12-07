@@ -68,7 +68,7 @@ Then: `![Diagram.](figures-generated/mydiagram.pdf){#fig:diag width=40%}`
 | Proposed | 92.1%    | Medium |
 | Oracle   | 98.5%    | Slow   |
 
-Table: Comparison of methods. Reference with @tbl:comparison. {#tbl:comparison}
+: Comparison of methods. Reference with @tbl:comparison. {#tbl:comparison short-caption="Comparison of methods."}
 
 ### LaTeX Table
 

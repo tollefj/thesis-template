@@ -3,6 +3,9 @@
 
 filters:
   - citeproc    # Process citations
+  - latex/filters/short-captions.lua    # Enable short captions for List of Figures
+  - latex/filters/short-captions-table.lua  # Enable short captions for List of Tables
+  - latex/filters/filterboxes.lua       # Create colored tcolorbox environments
 
 metadata:
   link-citations: true
