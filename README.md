@@ -1,6 +1,8 @@
-# PhD Thesis Template
+# PhD Thesis Template with DMD
 
 Write your thesis in Markdown. Build to professional PDF using Pandoc and XeLaTeX.
+
+**NEW**: DMD (Document Markdown) - Enhanced syntax for cleaner, more intuitive academic writing. See [DMD Documentation](docs/DMD-README.md).
 
 ## Prerequisites
 
@@ -60,11 +62,17 @@ thesis-md-template/
 ```bash
 scripts/papers.sh       # Compile individual papers to PDF
 scripts/filterbib.sh    # Filter bibliography (for large .bib files)
+scripts/dmd-transpile   # DMD transpiler (enhanced syntax)
 ```
 
 ## Documentation
 
 **Start here:** `chapters/intro.md` - Working examples of all features
+
+**DMD Enhanced Syntax:**
+- `docs/DMD-README.md` - Getting started with DMD
+- `docs/DMD-SYNTAX.md` - Complete syntax reference
+- `chapters/example.dmd` - Working example with enhanced syntax
 
 Also see:
 - `images/README.md` - Creating required placeholder images

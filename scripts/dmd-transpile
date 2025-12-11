@@ -1,0 +1,86 @@
+#!/usr/bin/env python3
+"""
+DMD Transpiler CLI
+
+Transpiles DMD enhanced syntax to standard markdown for the Pandoc pipeline.
+"""
+
+import sys
+import argparse
+from pathlib import Path
+
+# Add parent directory to path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from dmd.transpile import DMDTranspiler
+from dmd.validator import DMDValidator
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description='Transpile DMD enhanced syntax to standard markdown'
+    )
+
+    parser.add_argument('input', type=Path, help='Input .dmd or .md file')
+    parser.add_argument('output', type=Path, nargs='?', help='Output .md file (default: same name with .md)')
+    parser.add_argument('--validate', action='store_true', help='Validate references before transpiling')
+    parser.add_argument('--strict', action='store_true', help='Exit on validation warnings')
+    parser.add_argument('--verbose', '-v', action='store_true', help='Verbose output')
+    parser.add_argument('--dry-run', action='store_true', help='Show output without writing file')
+
+    args = parser.parse_args()
+
+    # Determine output file
+    if args.output:
+        output_file = args.output
+    elif args.dry_run:
+        output_file = None
+    else:
+        # Replace .dmd with .md, or add .transpiled.md
+        if args.input.suffix == '.dmd':
+            output_file = args.input.with_suffix('.md')
+        else:
+            output_file = args.input.with_suffix('.transpiled.md')
+
+    # Validate if requested
+    if args.validate:
+        if args.verbose:
+            print(f"Validating {args.input}...")
+
+        validator = DMDValidator(args.input.parent, strict=args.strict)
+        validator.validate_file(args.input)
+        validator.print_report(verbose=args.verbose)
+
+        if validator.has_errors():
+            print("\n✗ Validation failed. Fix errors before transpiling.")
+            sys.exit(1)
+
+        if args.strict and validator.has_warnings():
+            print("\n✗ Validation warnings (strict mode enabled).")
+            sys.exit(1)
+
+    # Transpile
+    if args.verbose:
+        print(f"Transpiling {args.input}...")
+
+    transpiler = DMDTranspiler(verbose=args.verbose)
+
+    try:
+        result = transpiler.transpile_file(args.input, output_file)
+
+        if args.dry_run:
+            print("\n=== Transpiled Output ===")
+            print(result)
+        else:
+            print(f"✓ Transpiled to {output_file}")
+
+    except Exception as e:
+        print(f"✗ Error: {e}", file=sys.stderr)
+        if args.verbose:
+            import traceback
+            traceback.print_exc()
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()

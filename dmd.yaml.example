@@ -1,0 +1,122 @@
+# DMD (Document Markdown) Configuration File
+# This file defines the structure of your document with flexible N-part organization
+
+document:
+  type: thesis  # Options: thesis, book, report, proceedings
+  title: "Your Thesis Title Here"
+  author: "Your Full Name"
+
+# Metadata (merged into meta.yaml)
+metadata:
+  subtitle: "A Comprehensive Study"
+  date: "December 2025"
+  place: "Trondheim"
+  supervisor1: "Main Supervisor Name"
+  supervisor2: "Co-supervisor Name"
+  university: "University Name"
+  department: "Department of Computer Science"
+
+  abstract-en: |
+    This thesis investigates advanced document authoring systems...
+
+  preface: |
+    This thesis presents research conducted at...
+
+  acknowledgements: |
+    I would like to thank my supervisors...
+
+# Document structure with flexible parts
+structure:
+  # Frontmatter components (optional)
+  frontmatter:
+    - titlepage
+    - dedication
+    - abstract
+    - preface
+    - acknowledgements
+    - toc
+    - lof  # List of Figures
+    - lot  # List of Tables
+
+  # Main content organized into parts
+  parts:
+    # Part 1: Main thesis chapters
+    - id: research
+      number: 1
+      title: "Research Overview"
+      image: "images/part1-placeholder.jpg"
+      chapters:
+        - chapters/intro.md
+        - chapters/background.md
+        - chapters/methods.md
+        - chapters/results.md
+        - chapters/discussion.md
+        - chapters/conclusion.md
+
+    # Part 2: Publications
+    - id: publications
+      number: 2
+      title: "Publications"
+      image: "images/part2-placeholder.jpg"
+      papers:
+        - number: I
+          title: "First Paper Title: A Novel Approach"
+          authors: "Author Name, Co-author Name"
+          venue: "International Conference on Field 2024"
+          file: papers/paper1.pdf
+
+        - number: II
+          title: "Second Paper Title: Extensions"
+          authors: "Author Name, Other Author"
+          venue: "Journal of Field, Vol. 10, 2024"
+          file: papers/paper2.pdf
+
+    # Optional: Part 3 for additional content
+    # - id: casestudies
+    #   number: 3
+    #   title: "Case Studies"
+    #   image: "images/part3-placeholder.jpg"
+    #   chapters:
+    #     - chapters/case1.md
+    #     - chapters/case2.md
+
+  # Backmatter
+  backmatter:
+    - bibliography  # References section
+    - appendix      # Appendix content
+
+# Build configuration
+build:
+  bibliography: "references.bib"  # or "filtered.bib" if using filterbib
+  csl: "config/acl.csl"
+  output: "thesis.pdf"
+
+  # Pandoc configuration (uses existing config.yaml)
+  pandoc_defaults: "config/config.yaml"
+
+  # Filters (in execution order)
+  filters:
+    - citeproc
+    - latex/filters/short-captions.lua
+    - latex/filters/short-captions-table.lua
+    - latex/filters/filterboxes.lua
+
+  # Transpiler options
+  transpiler:
+    enabled: true
+    validate_before_build: true
+    strict: false  # If true, stop on warnings
+
+# Validation options
+validation:
+  check_files_exist: true
+  check_images_exist: true
+  check_references: true
+  check_paper_pdfs: true
+  auto_fix: false
+
+# Optional: Watch mode settings
+watch:
+  port: 8080
+  open_browser: true
+  debounce_ms: 1000
