@@ -1,5 +1,5 @@
 """
-DMD Validator
+tmd validator
 
 Validates cross-references, checks for duplicate labels, and provides helpful
 error messages with line numbers and suggestions.
@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import List, Dict, Set, Optional, Tuple
 from dataclasses import dataclass
 from difflib import get_close_matches
-from .parser import DMDParser
+from .parser import Parser
 
 
 @dataclass
@@ -23,8 +23,8 @@ class ValidationError:
     suggestion: Optional[str] = None
 
 
-class DMDValidator:
-    """Validate DMD documents for common issues"""
+class Validator:
+    """Validate documents for common issues"""
 
     def __init__(self, project_dir: Path, strict: bool = False):
         self.project_dir = project_dir
@@ -53,7 +53,7 @@ class DMDValidator:
         Returns True if no errors found (warnings are OK).
         """
         content = file_path.read_text(encoding='utf-8')
-        parser = DMDParser(content)
+        parser = Parser(content)
 
         # Collect labels from figures
         figures = parser.parse_figures()
@@ -146,7 +146,7 @@ class DMDValidator:
         """
         # Phase 1: Collect all labels and check for duplicates
         for file_path in files:
-            if file_path.suffix in ['.md', '.dmd']:
+            if file_path.suffix == '.md':
                 self.validate_file(file_path)
 
         # Phase 2: Validate all references

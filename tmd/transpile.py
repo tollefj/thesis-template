@@ -1,18 +1,17 @@
 """
-DMD Transpiler
+tmd transpiler
 
-Converts enhanced DMD syntax to standard markdown + LaTeX that can be processed
-by the existing Pandoc + Lua filter + XeLaTeX pipeline.
+converts extended markdown syntax to standard markdown + LaTeX for the pandoc pipeline.
 """
 
 from pathlib import Path
 from typing import Optional
-from .parser import DMDParser, FigureElement, TableElement, CrossReference, CalloutElement
+from .parser import Parser, FigureElement, TableElement, CrossReference, CalloutElement
 
 
-class DMDTranspiler:
+class Transpiler:
     """
-    Transpile .dmd enhanced syntax to standard markdown + LaTeX
+    Transpile extended markdown syntax to standard markdown + LaTeX
 
     Maintains 100% backward compatibility - standard markdown passes through unchanged.
     """
@@ -43,7 +42,7 @@ class DMDTranspiler:
         Transpile a file from enhanced syntax to standard markdown.
 
         Args:
-            input_file: Path to input .dmd or .md file
+            input_file: Path to input .md file
             output_file: Optional path to write output (if None, returns string)
 
         Returns:
@@ -52,7 +51,7 @@ class DMDTranspiler:
         content = input_file.read_text(encoding='utf-8')
 
         # Parse the content
-        parser = DMDParser(content)
+        parser = Parser(content)
 
         # Check if it has enhanced syntax - if not, pass through unchanged
         if not parser.has_enhanced_syntax():
@@ -101,7 +100,7 @@ class DMDTranspiler:
         Input:  @fig[id](path.jpg){w=50% short="Short"} Caption text.
         Output: ![Caption text.](path.jpg){#fig:id width=50% short-caption="Short"}
         """
-        parser = DMDParser(content)
+        parser = Parser(content)
         figures = parser.parse_figures()
 
         # Sort by position (reverse order to maintain positions during replacement)
@@ -129,7 +128,7 @@ class DMDTranspiler:
 
                 : Caption text {#tbl:id}
         """
-        parser = DMDParser(content)
+        parser = Parser(content)
         tables = parser.parse_tables()
 
         # Sort by position (reverse order)
@@ -183,7 +182,7 @@ class DMDTranspiler:
                 \\eqref{eq:label} (LaTeX)
                 @sec:label (pandoc native)
         """
-        parser = DMDParser(content)
+        parser = Parser(content)
         refs = parser.parse_cross_references()
 
         # Sort by position (reverse order)
@@ -207,7 +206,7 @@ class DMDTranspiler:
                 Important concept
                 :::
         """
-        parser = DMDParser(content)
+        parser = Parser(content)
         callouts = parser.parse_callouts()
 
         # Sort by position (reverse order)

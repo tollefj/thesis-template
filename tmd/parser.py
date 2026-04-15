@@ -1,5 +1,5 @@
 """
-DMD Syntax Parser
+tmd syntax parser
 
 Parses enhanced inline syntax for figures, tables, cross-references, and callouts.
 """
@@ -48,8 +48,8 @@ class CalloutElement:
     original: str
 
 
-class DMDParser:
-    """Parser for DMD enhanced syntax"""
+class Parser:
+    """Parser for extended markdown syntax"""
 
     # Figure syntax: @fig[id](path.jpg){w=50% short="Short"} Caption text.
     FIGURE_PATTERN = re.compile(
@@ -194,7 +194,7 @@ class DMDParser:
         return attributes
 
     def has_enhanced_syntax(self) -> bool:
-        """Check if content contains any DMD enhanced syntax"""
+        """Check if content contains any extended syntax"""
         patterns = [
             self.FIGURE_PATTERN,
             self.TABLE_PATTERN,

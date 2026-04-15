@@ -45,6 +45,10 @@ else
     echo -e "${YELLOW}Using references.bib (run scripts/filterbib.sh to filter citations)${NC}"
 fi
 
+# Transpile content files to temp directory (handles extended syntax transparently)
+TEMP_DIR=$(mktemp -d)
+trap '[ -n "${TEMP_DIR}" ] && rm -rf "${TEMP_DIR}"' EXIT
+
 # Step 1: Generate frontmatter from template
 echo -e "${YELLOW}Step 1/3: Generating frontmatter...${NC}"
 pandoc --wrap=preserve --template="templates/frontmatter.tex" ${META_FILE} -o ${FRONTMATTER_TEX}
@@ -68,6 +72,16 @@ THESIS_CONTENT_FILES=(
 
 echo -e "${GREEN}Building from: ${THESIS_CONTENT_FILES[*]}${NC}\n"
 
+# Transpile chapter files (backward-compatible; passes through standard markdown unchanged)
+echo -e "${YELLOW}Transpiling chapters...${NC}"
+TRANSPILED_FILES=()
+for f in "${THESIS_CONTENT_FILES[@]}"; do
+    out="${TEMP_DIR}/$(basename "$f")"
+    python3 scripts/transpile "$f" "$out" 2>/dev/null || cp "$f" "$out"
+    TRANSPILED_FILES+=("$out")
+done
+echo -e "${GREEN}✓ Transpilation done${NC}\n"
+
 # Step 3: Compile thesis
 if [[ "$1" == "--tex" ]]; then
     # Generate LaTeX file only (for debugging)
@@ -75,7 +89,7 @@ if [[ "$1" == "--tex" ]]; then
     pandoc --bibliography ${BIB_FILE} \
            --csl=config/acl.csl \
            --defaults=${DEFAULTS_FILE} \
-           ${THESIS_CONTENT_FILES[*]} \
+           ${TRANSPILED_FILES[*]} \
            ${META_FILE} \
            -o thesis.tex
     echo -e "${GREEN}✓ LaTeX generated: thesis.tex${NC}"
@@ -85,7 +99,7 @@ else
     pandoc --bibliography ${BIB_FILE} \
            --csl=config/acl.csl \
            --defaults=${DEFAULTS_FILE} \
-           ${THESIS_CONTENT_FILES[*]} \
+           ${TRANSPILED_FILES[*]} \
            ${META_FILE} \
            -o thesis.pdf
     echo -e "${GREEN}✓ PDF generated: thesis.pdf${NC}"

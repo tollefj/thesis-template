@@ -1,5 +1,5 @@
 """
-Unit tests for DMD transpiler
+Unit tests for tmd transpiler
 """
 
 import pytest
@@ -9,8 +9,8 @@ import sys
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from dmd.transpile import DMDTranspiler
-from dmd.parser import DMDParser
+from tmd.transpile import Transpiler
+from tmd.parser import Parser
 
 
 class TestFigureSyntax:
@@ -19,7 +19,7 @@ class TestFigureSyntax:
     def test_basic_figure(self):
         """Test basic figure without attributes"""
         input_md = '@fig[example](images/test.jpg) This is a figure caption.'
-        transpiler = DMDTranspiler()
+        transpiler = Transpiler()
         result = transpiler.transpile_content(input_md)
 
         assert '![This is a figure caption.](images/test.jpg){#fig:example}' in result
@@ -28,7 +28,7 @@ class TestFigureSyntax:
     def test_figure_with_width(self):
         """Test figure with width attribute"""
         input_md = '@fig[example](images/test.jpg){w=50%} This is a figure caption.'
-        transpiler = DMDTranspiler()
+        transpiler = Transpiler()
         result = transpiler.transpile_content(input_md)
 
         assert '![This is a figure caption.](images/test.jpg){#fig:example width=50%}' in result
@@ -36,7 +36,7 @@ class TestFigureSyntax:
     def test_figure_with_short_caption(self):
         """Test figure with short caption attribute"""
         input_md = '@fig[example](images/test.jpg){short="Short caption"} This is a longer figure caption with details.'
-        transpiler = DMDTranspiler()
+        transpiler = Transpiler()
         result = transpiler.transpile_content(input_md)
 
         assert '#fig:example' in result
@@ -46,7 +46,7 @@ class TestFigureSyntax:
     def test_figure_with_multiple_attributes(self):
         """Test figure with multiple attributes"""
         input_md = '@fig[example](images/test.jpg){w=50% short="Short"} Caption text.'
-        transpiler = DMDTranspiler()
+        transpiler = Transpiler()
         result = transpiler.transpile_content(input_md)
 
         assert '#fig:example' in result
@@ -62,7 +62,7 @@ Some text here.
 
 @fig[fig2](img2.jpg){w=60%} Caption 2.
 '''
-        transpiler = DMDTranspiler()
+        transpiler = Transpiler()
         result = transpiler.transpile_content(input_md)
 
         assert '![Caption 1.](img1.jpg){#fig:fig1}' in result
@@ -80,7 +80,7 @@ class TestTableSyntax:
 |--------|----------|
 | Ours   | 95.2%    |
 '''
-        transpiler = DMDTranspiler()
+        transpiler = Transpiler()
         result = transpiler.transpile_content(input_md)
 
         assert ': Performance comparison {#tbl:results}' in result
@@ -94,7 +94,7 @@ class TestCrossReferences:
     def test_figure_reference(self):
         """Test figure cross-reference"""
         input_md = 'See @fig[example] for details.'
-        transpiler = DMDTranspiler()
+        transpiler = Transpiler()
         result = transpiler.transpile_content(input_md)
 
         assert '@fig:example' in result
@@ -103,7 +103,7 @@ class TestCrossReferences:
     def test_table_reference(self):
         """Test table cross-reference"""
         input_md = 'Results in @tbl[results] show improvements.'
-        transpiler = DMDTranspiler()
+        transpiler = Transpiler()
         result = transpiler.transpile_content(input_md)
 
         assert '@tbl:results' in result
@@ -111,7 +111,7 @@ class TestCrossReferences:
     def test_equation_reference(self):
         """Test equation cross-reference"""
         input_md = 'According to @eq[maxwell], we can derive...'
-        transpiler = DMDTranspiler()
+        transpiler = Transpiler()
         result = transpiler.transpile_content(input_md)
 
         assert '\\eqref{eq:maxwell}' in result
@@ -119,7 +119,7 @@ class TestCrossReferences:
     def test_reference_with_custom_text(self):
         """Test cross-reference with custom text"""
         input_md = 'As @fig[example](shown in the figure) demonstrates...'
-        transpiler = DMDTranspiler()
+        transpiler = Transpiler()
         result = transpiler.transpile_content(input_md)
 
         assert '[shown in the figure](#fig:example)' in result
@@ -127,7 +127,7 @@ class TestCrossReferences:
     def test_equation_reference_with_custom_text(self):
         """Test equation reference with custom text"""
         input_md = 'Using @eq[maxwell](Maxwell\'s equation), we get...'
-        transpiler = DMDTranspiler()
+        transpiler = Transpiler()
         result = transpiler.transpile_content(input_md)
 
         assert 'Maxwell\'s equation \\eqref{eq:maxwell}' in result
@@ -139,7 +139,7 @@ class TestCallouts:
     def test_note_callout(self):
         """Test note callout"""
         input_md = '@note{This is an important concept to remember.}'
-        transpiler = DMDTranspiler()
+        transpiler = Transpiler()
         result = transpiler.transpile_content(input_md)
 
         assert '::: {.bluebox title="Note"}' in result
@@ -150,7 +150,7 @@ class TestCallouts:
     def test_warning_callout(self):
         """Test warning callout"""
         input_md = '@warning{Be careful with this approach.}'
-        transpiler = DMDTranspiler()
+        transpiler = Transpiler()
         result = transpiler.transpile_content(input_md)
 
         assert '::: {.yellowbox title="Warning"}' in result
@@ -159,7 +159,7 @@ class TestCallouts:
     def test_tip_callout(self):
         """Test tip callout"""
         input_md = '@tip{Pro tip: use this shortcut.}'
-        transpiler = DMDTranspiler()
+        transpiler = Transpiler()
         result = transpiler.transpile_content(input_md)
 
         assert '::: {.graybox title="Tip"}' in result
@@ -179,7 +179,7 @@ This is standard markdown with **bold** and *italic* text.
 
 See Figure @fig:standard for details.
 '''
-        transpiler = DMDTranspiler()
+        transpiler = Transpiler()
         result = transpiler.transpile_content(input_md)
 
         # Should pass through unchanged (no enhanced syntax)
@@ -196,7 +196,7 @@ Enhanced figure: @fig[enhanced](img2.jpg) Enhanced caption.
 
 Reference both: @fig[std] and @fig[enhanced].
 '''
-        transpiler = DMDTranspiler()
+        transpiler = Transpiler()
         result = transpiler.transpile_content(input_md)
 
         # Standard figure unchanged
@@ -211,12 +211,12 @@ Reference both: @fig[std] and @fig[enhanced].
 
 
 class TestParser:
-    """Test the DMD parser"""
+    """Test the tmd parser"""
 
     def test_parse_figures(self):
         """Test parsing figure elements"""
         content = '@fig[test](img.jpg){w=50%} Caption here.'
-        parser = DMDParser(content)
+        parser = Parser(content)
         figures = parser.parse_figures()
 
         assert len(figures) == 1
@@ -228,7 +228,7 @@ class TestParser:
     def test_parse_cross_references(self):
         """Test parsing cross-references"""
         content = 'See @fig[test], @tbl[data], and @eq[formula].'
-        parser = DMDParser(content)
+        parser = Parser(content)
         refs = parser.parse_cross_references()
 
         assert len(refs) == 3
@@ -241,12 +241,12 @@ class TestParser:
         """Test detection of enhanced syntax"""
         # Standard markdown
         standard = '# Title\n\nParagraph with text.'
-        parser1 = DMDParser(standard)
+        parser1 = Parser(standard)
         assert not parser1.has_enhanced_syntax()
 
         # Enhanced syntax
         enhanced = '@fig[test](img.jpg) Caption.'
-        parser2 = DMDParser(enhanced)
+        parser2 = Parser(enhanced)
         assert parser2.has_enhanced_syntax()
 
 

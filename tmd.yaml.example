@@ -1,4 +1,4 @@
-# DMD (Document Markdown) Configuration File
+# tmd (thesis markdown) configuration
 # This file defines the structure of your document with flexible N-part organization
 
 document:
